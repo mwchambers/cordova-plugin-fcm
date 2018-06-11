@@ -226,6 +226,19 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     if (state == UIApplicationStateActive || state == UIApplicationStateInactive) {
         [userInfoMutable setValue:@(NO) forKey:@"wasTapped"];
         NSLog(@"app active");
+
+        id aps = [userInfo objectForKey:@"aps"];
+
+        id badge = [aps objectForKey:@"badge"];
+
+        NSLog(@"badge: %@", badge);^M
+
+        if([badge isKindOfClass: [NSNumber class]]){
+            [UIApplication sharedApplication].applicationIconBadgeNumber = [badge integerValue];
+        } else {
+            NSLog(@"badge not a NSNumber");^M
+        }
+
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:userInfoMutable
                                                            options:0
                                                              error:&error];
