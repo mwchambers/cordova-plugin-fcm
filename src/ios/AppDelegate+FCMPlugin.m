@@ -122,7 +122,20 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     // Print full message.
     NSLog(@"%@", userInfo);
-    
+
+	// XXX: TODO: move the badge code (duplicated below) into a function
+    id aps = [userInfo objectForKey:@"aps"];
+
+    id badge = [aps objectForKey:@"badge"];
+
+    NSLog(@"badge: %@", badge);
+
+    if([badge isKindOfClass: [NSNumber class]]){
+        [UIApplication sharedApplication].applicationIconBadgeNumber = [badge integerValue];
+    } else {
+        NSLog(@"badge not a NSNumber");
+    }
+
     NSError *error;
     NSDictionary *userInfoMutable = [userInfo mutableCopy];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:userInfoMutable
@@ -238,6 +251,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
         } else {
             NSLog(@"badge not a NSNumber");
         }
+
 
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:userInfoMutable
                                                            options:0
