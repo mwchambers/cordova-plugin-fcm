@@ -231,12 +231,12 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
         id badge = [aps objectForKey:@"badge"];
 
-        NSLog(@"badge: %@", badge);^M
+        NSLog(@"badge: %@", badge);
 
         if([badge isKindOfClass: [NSNumber class]]){
             [UIApplication sharedApplication].applicationIconBadgeNumber = [badge integerValue];
         } else {
-            NSLog(@"badge not a NSNumber");^M
+            NSLog(@"badge not a NSNumber");
         }
 
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:userInfoMutable
